@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KITTISAK Portfolio</title>
+
+<style>
+
+/* รีเซ็ตพื้นฐาน */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI, sans-serif;
+}
+
+body{
+background:#050505;
+min-height:200vh;
+color:white;
+overflow-x:hidden;
+}
+
+/* ===== NAVBAR ===== */
+.navbar{
+position:fixed;
+top:25px;
+left:50%;
+transform:translateX(-50%);
+width:60%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px 35px;
+background:rgba(10,10,10,0.55);
+backdrop-filter:blur(12px);
+-webkit-backdrop-filter:blur(12px);
+border-radius:14px;
+border:1px solid rgba(255,0,0,0.2);
+box-shadow:
+0 10px 40px rgba(0,0,0,.9),
+0 0 20px rgba(120,0,0,.2);
+z-index:9999;
+}
+
+.logo{
+font-size:16px;
+font-weight:600;
+letter-spacing:2px;
+color:#ffffff;
+}
+
+.menu{
+display:flex;
+gap:40px;
+list-style:none;
+}
+
+.menu a{
+text-decoration:none;
+color:#9a9a9a;
+font-size:14px;
+position:relative;
+transition:.3s;
+}
+
+.menu a:hover{
+color:#ff2b2b;
+}
+
+.menu a::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-6px;
+width:0%;
+height:2px;
+background:#ff2b2b;
+transition:.3s;
+}
+
+.menu a:hover::after{
+width:100%;
+}
+
+.right{
+display:flex;
+gap:10px;
+}
+
+.btn-outline{
+padding:6px 14px;
+border:1px solid #444;
+background:transparent;
+color:#aaa;
+border-radius:8px;
+cursor:pointer;
+transition:.3s;
+}
+
+.btn-outline:hover{
+border-color:#ff2b2b;
+color:white;
+}
+
+.btn-red{
+padding:6px 16px;
+border:none;
+border-radius:8px;
+background:linear-gradient(45deg,#ff0000,#b00000);
+color:white;
+font-weight:600;
+cursor:pointer;
+box-shadow:0 0 10px rgba(255,0,0,.4);
+}
+
+/* VIDEO BACKGROUND */
+.video-bg{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+object-fit:cover;
+z-index:-2;
+}
+
+/* DARK OVERLAY */
+.overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle at center,rgba(0,0,0,.6),rgba(0,0,0,.95)),
+linear-gradient(transparent 95%,rgba(255,0,0,.05) 96%),
+linear-gradient(90deg,transparent 95%,rgba(255,0,0,.05) 96%);
+background-size:
+100% 100%,
+70px 70px,
+70px 70px;
+z-index:-1;
+}
+
+body{
+color:white;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:flex-start;
+padding:120px;
+}
+
+/* CONTAINER GRID */
+.container{
+width:1100px;
+display:grid;
+grid-template-columns:1fr 1fr 1fr;
+grid-template-rows:180px 250px 250px;
+gap:25px;
+}
+
+/* PANELS */
+.panel{
+background:rgba(8,8,8,.85);
+border:1px solid rgba(255,0,0,.35);
+padding:25px;
+position:relative;
+box-shadow:
+0 0 25px rgba(255,0,0,.15),
+inset 0 0 15px rgba(255,0,0,.05);
+transition:.35s;
+backdrop-filter: blur(6px);
+}
+
+.panel:hover{
+transform:translateY(-8px);
+box-shadow:
+0 0 35px rgba(255,0,0,.4),
+inset 0 0 20px rgba(255,0,0,.15);
+}
+
+.panel::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:1px;
+background:linear-gradient(90deg,transparent,#ff0000,transparent);
+opacity:.6;
+}
+
+.hero{
+grid-column:1 / span 3;
+display:flex;
+flex-direction:column;
+justify-content:center;
+}
+
+.hero h1{
+font-size:34px;
+letter-spacing:3px;
+color:#ff2e2e;
+text-shadow:0 0 20px rgba(255,0,0,.8);
+}
+
+h2{
+font-size:18px;
+margin-bottom:12px;
+color:#ff3b3b;
+letter-spacing:1px;
+}
+
+p{
+font-size:14px;
+opacity:.9;
+line-height:1.6;
+}
+
+.profile{grid-column:1 / span 2;}
+.info{grid-column:3;}
+.skills{grid-column:1;}
+.education{grid-column:2 / span 2;}
+
+.skill-box{
+display:flex;
+gap:30px;
+margin-top:20px;
+}
+
+.circle{
+width:90px;
+height:90px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+background:conic-gradient(#ff1e1e calc(var(--value)*1%), #222 0);
+box-shadow:0 0 15px rgba(255,0,0,.5);
+}
+
+.circle::after{
+content:"";
+position:absolute;
+width:70px;
+height:70px;
+background:#050505;
+border-radius:50%;
+box-shadow:inset 0 0 10px rgba(255,0,0,.3);
+}
+
+.percent{
+position:absolute;
+font-size:14px;
+z-index:2;
+}
+
+.label{
+text-align:center;
+margin-top:8px;
+font-size:12px;
+opacity:.85;
+}
+
+.skill-item{
+display:flex;
+flex-direction:column;
+align-items:center;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+  <div class="logo">KITTISAK BUNSUAY</div>
+  <ul class="menu">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="Resume.html">Profile</a></li>
+    <li><a href="educational record1.html">Educational</a></li>
+    <li><a href="performance.html">Certificates</a></li>
+    <li><a href="activity1.html">Activities</a></li>
+  </ul>
+  <div class="right">
+    <button class="btn-outline">ผู้จัดทำ</button>
+    <button class="btn-red">KITTISAK</button>
+  </div>
+</nav>
+
+<!-- VIDEO BACKGROUND -->
+<video autoplay muted loop class="video-bg">
+<source src="bb.mp4" type="video/mp4">
+</video>
+
+<div class="overlay"></div>
+
+<div class="container">
+
+<div class="panel hero">
+<h1>KITTISAK BUNSUAY</h1>
+<p>Creative Developer / Frontend</p>
+</div>
+
+<div class="panel profile">
+<h2>PROFILE</h2>
+<p>นักพัฒนาเว็บที่ชอบสร้าง UI แนว Futuristic และทดลองเอฟเฟกต์เทคโนโลยีแบบในหนังไซไฟ เช่น Neon Interface / HUD System มุ่งเน้นการพัฒนา Frontend และ Creative Web Design</p>
+</div>
+
+<div class="panel info">
+<h2>PERSONAL</h2>
+<p>Name : Kittisak Bunsuay</p>
+<p>Birth : 07/07/2008</p>
+<p>Nationality : Thai</p>
+<p>Language : Thai / English</p>
+</div>
+
+<div class="panel skills">
+<h2>SKILL SPECTRUM</h2>
+<div class="skill-box">
+<div class="skill-item">
+<div class="circle" style="--value:90"><span class="percent">90%</span></div>
+<div class="label">HTML</div>
+</div>
+<div class="skill-item">
+<div class="circle" style="--value:85"><span class="percent">85%</span></div>
+<div class="label">CSS</div>
+</div>
+<div class="skill-item">
+<div class="circle" style="--value:70"><span class="percent">70%</span></div>
+<div class="label">JavaScript</div>
+</div>
+</div>
+</div>
+
+<div class="panel education">
+<h2>EDUCATION</h2>
+<p>Science - Mathematics Program</p>
+<p>Hor Phra School</p>
+<p>Graduation Year : 2026</p>
+</div>
+
+</div>
+
+</body>
+</html>

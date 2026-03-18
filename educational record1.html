@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KITTISAK Portfolio</title>
+
+<style>
+
+/* รีเซ็ตพื้นฐาน */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI, sans-serif;
+}
+
+body{
+background:#050505;
+height:200vh;
+color:white;
+}
+
+/* NAVBAR */
+
+.navbar{
+
+position:fixed;
+top:25px;
+left:50%;
+transform:translateX(-50%);
+
+width:60%;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:14px 35px;
+
+background:rgba(10,10,10,0.55);
+backdrop-filter:blur(12px);
+-webkit-backdrop-filter:blur(12px);
+
+border-radius:14px;
+
+border:1px solid rgba(255,0,0,0.2);
+
+box-shadow:
+0 10px 40px rgba(0,0,0,.9),
+0 0 20px rgba(120,0,0,.2);
+
+}
+
+/* โลโก้ */
+
+.logo{
+
+font-size:16px;
+font-weight:600;
+letter-spacing:2px;
+color:#ffffff;
+
+}
+
+/* เมนู */
+
+.menu{
+
+display:flex;
+gap:40px;
+list-style:none;
+
+}
+
+.menu a{
+
+text-decoration:none;
+color:#9a9a9a;
+font-size:14px;
+position:relative;
+transition:.3s;
+
+}
+
+.menu a:hover{
+
+color:#ff2b2b;
+
+}
+
+/* เส้นแดง */
+
+.menu a::after{
+
+content:"";
+position:absolute;
+
+left:0;
+bottom:-6px;
+
+width:0%;
+height:2px;
+
+background:#ff2b2b;
+
+transition:.3s;
+
+}
+
+.menu a:hover::after{
+
+width:100%;
+
+}
+
+/* ปุ่มขวา */
+
+.right{
+
+display:flex;
+gap:10px;
+
+}
+
+.btn-outline{
+
+padding:6px 14px;
+
+border:1px solid #444;
+
+background:transparent;
+
+color:#aaa;
+
+border-radius:8px;
+
+cursor:pointer;
+
+}
+
+.btn-outline:hover{
+
+border-color:#ff2b2b;
+color:white;
+
+}
+
+/* ปุ่มแดง */
+
+.btn-red{
+
+padding:6px 16px;
+
+border:none;
+
+border-radius:8px;
+
+background:linear-gradient(45deg,#ff0000,#b00000);
+
+color:white;
+
+font-weight:600;
+
+cursor:pointer;
+
+box-shadow:0 0 10px rgba(255,0,0,.4);
+
+}
+
+</style>
+
+</head>
+
+<style>
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  width:100%;height:100vh;
+  background:radial-gradient(ellipse at 50% 40%,#1a0000 0%,#0d0000 55%,#000000 100%);
+  overflow:hidden;
+  font-family:sans-serif;
+  position:relative;
+}
+
+.grid-overlay{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(200,0,0,0.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(200,0,0,0.06) 1px,transparent 1px);
+  background-size:50px 50px;
+  pointer-events:none;z-index:0;
+}
+
+.scanline{
+  position:absolute;left:0;width:100%;height:3px;
+  background:linear-gradient(to right,transparent,rgba(255,40,40,0.12),transparent);
+  animation:scan 7s linear infinite;
+  pointer-events:none;z-index:1;
+}
+@keyframes scan{from{top:-3px;}to{top:100vh;}}
+
+#cityCanvas{
+  position:absolute;bottom:0;left:0;
+  width:100%;height:200px;z-index:1;
+}
+
+.fog{
+  position:absolute;bottom:0;left:0;
+  width:100%;height:180px;
+  background:linear-gradient(to top,rgba(30,0,0,0.75),transparent);
+  z-index:2;pointer-events:none;
+}
+
+/* RINGS */
+.ring{
+  position:absolute;
+  left:49.5%;
+  top:60%; /* จาก 46% → ขยับลง */
+  border-radius:50%;
+  border:1.5px solid rgba(255,30,30,0.3);
+  animation:spinRing 14s linear infinite;
+  z-index:3;
+}
+.ring1{width:240px;height:240px;
+  transform:translate(-50%,-50%) rotateX(72deg);
+  animation-duration:10s;}
+.ring2{width:340px;height:340px;
+  transform:translate(-50%,-50%) rotateX(72deg);
+  animation-duration:17s;animation-direction:reverse;
+  border-color:rgba(200,0,0,0.2);}
+.ring3{width:440px;height:440px;
+  transform:translate(-50%,-50%) rotateX(72deg);
+  animation-duration:25s;
+  border-color:rgba(150,0,0,0.12);}
+@keyframes spinRing{
+  from{transform:translate(-50%,-50%) rotateX(72deg) rotate(0deg);}
+  to{transform:translate(-50%,-50%) rotateX(72deg) rotate(360deg);}
+}
+
+.center-glow{   
+  position:absolute;
+  left:49.3%;
+  top:50%; /* ให้ตรงกับ ring */
+  transform:translate(-50%,-50%);
+  width:260px;
+  height:260px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,30,30,0.28) 0%,rgba(150,0,0,0.1) 45%,transparent 70%);
+  animation:glowPulse 2.8s ease-in-out infinite;
+  z-index:3;
+}
+
+.it-text{
+  position:absolute;
+  left:50%;
+  top:47%; /* เปลี่ยนจาก 46% */
+  transform:translate(-50%,-50%); /* เปลี่ยนจาก -58% */
+  
+  font-size:80px; /* เพิ่มขนาด (เดิม 130px) */ 
+  font-weight:900;
+  color:#ffffff;
+  letter-spacing:5px;
+
+  text-shadow:
+    0 0 20px rgba(255,60,60,1),
+    0 0 70px rgba(220,0,0,0.9),
+    0 0 150px rgba(180,0,0,0.6),
+    0 0 250px rgba(120,0,0,0.35);
+
+  z-index:10;
+  animation:itPulse 3s ease-in-out infinite;
+}
+@keyframes itPulse{
+  0%,100%{
+    text-shadow:0 0 15px rgba(255,60,60,1),0 0 50px rgba(220,0,0,0.85),0 0 110px rgba(180,0,0,0.55);
+  }
+  50%{
+    text-shadow:0 0 25px rgba(255,80,80,1),0 0 80px rgba(255,20,20,0.9),0 0 160px rgba(200,0,0,0.65),0 0 240px rgba(140,0,0,0.4);
+  }
+}
+
+/* NODE */
+.node{
+  position:absolute;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  animation:floatNode 4s ease-in-out infinite;
+  z-index:8;cursor:default;
+}
+.node:nth-child(2n){animation-delay:-2s;}
+.node:nth-child(3n){animation-delay:-1s;}
+@keyframes floatNode{
+  0%,100%{transform:translateY(0px);}
+  50%{transform:translateY(-12px);}
+}
+
+.node-plate{
+  width:180px;height:180px;border-radius:50%;
+  background:radial-gradient(circle at 38% 32%,rgba(255,40,40,0.2),rgba(80,0,0,0.55));
+  border:2px solid rgba(255,50,50,0.55);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+  box-shadow:
+    0 0 22px rgba(255,30,30,0.5),
+    0 0 50px rgba(180,0,0,0.25),
+    inset 0 0 18px rgba(200,0,0,0.15);
+  transition:all 0.3s ease;
+  position:relative;
+}
+.node-plate::before{
+  content:"";
+  position:absolute;
+  width:126px;height:126px;border-radius:50%;
+  border:1px solid rgba(255,40,40,0.25);
+  animation:ringExpand 2.5s ease-out infinite;
+}
+@keyframes ringExpand{
+  0%{transform:scale(1);opacity:0.6;}
+  100%{transform:scale(1.6);opacity:0;}
+}
+.node-plate:hover{
+  transform:scale(1.15);
+  box-shadow:
+    0 0 40px rgba(255,60,60,0.85),
+    0 0 80px rgba(200,0,0,0.45),
+    inset 0 0 22px rgba(255,30,30,0.25);
+}
+
+/* รูปภาพใน node — เปลี่ยน src ได้เลย */
+.node-plate img{
+  width:100%;height:100%;
+  object-fit:cover;
+  border-radius:50%;
+  opacity:0.85;
+}
+
+/* fallback icon ถ้าไม่มีรูป */
+.node-icon{
+  font-size:38px;
+  filter:drop-shadow(0 0 10px rgba(255,80,80,0.9));
+  position:absolute;
+}
+
+.node-label{
+  font-size:13px;font-weight:700;
+  letter-spacing:2px;
+  color:#ff7070;
+  text-shadow:0 0 12px rgba(255,60,60,0.9);
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+
+#lineCanvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:2; /* สำคัญ */
+  pointer-events:none;
+}
+
+.lock{
+  position:absolute;
+  font-size:22px;
+  color:rgba(255,60,60,0.45);
+  text-shadow:0 0 10px rgba(200,0,0,0.7);
+  animation:floatNode 5s ease-in-out infinite;
+  z-index:5;
+}
+
+</style>
+</head>
+<body>
+
+<div class="grid-overlay"></div>
+<div class="scanline"></div>
+<canvas id="cityCanvas"></canvas>
+<div class="fog"></div>
+<canvas id="lineCanvas"></canvas>
+
+<div class="ring ring1"></div>
+<div class="ring ring2"></div>
+<div class="ring ring3"></div>
+<div class="center-glow"></div>
+<div class="it-text">Educational</div>
+
+<!-- =============================================
+     4 NODES — เปลี่ยน src="รูปของคุณ.jpg" ได้เลย
+     ============================================= -->
+
+<!-- NODE บน-ซ้าย -->
+<div class="node" id="n0" style="left:22%;top:24%">
+  <div class="node-plate">
+    <img src="ม.jpg" alt=""
+         onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <span class="node-icon" style="display:none">💡</span>
+  </div>
+  <span class="node-label">Kindergarten</span>
+</div>
+
+<!-- NODE บน-ขวา -->
+<div class="node" id="n1" style="left:68%;top:24%">
+  <div class="node-plate">
+    <img src="ม.jpg" alt=""
+         onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <span class="node-icon" style="display:none">🌐</span>
+  </div>
+  <span class="node-label">Elementary School</span>
+</div>
+
+<!-- NODE ล่าง-ซ้าย -->
+<div class="node" id="n2" style="left:22%;top:56%">
+  <div class="node-plate">
+    <img src="ม.jpg" alt=""
+         onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <span class="node-icon" style="display:none">⚙️</span>
+  </div>
+  <span class="node-label">Middle School</span>
+</div>
+
+<!-- NODE ล่าง-ขวา -->
+<div class="node" id="n3" style="left:68%;top:56%">
+  <div class="node-plate">
+    <img src="ป.png" alt=""
+         onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <span class="node-icon" style="display:none">📈</span>
+  </div>
+  <span class="node-label">High School</span>
+</div>
+
+<!-- LOCKS -->
+
+
+<script>
+/* ---- CITY SKYLINE ---- */
+const cityCanvas = document.getElementById('cityCanvas');
+const cityCtx = cityCanvas.getContext('2d');
+cityCanvas.width = window.innerWidth;
+cityCanvas.height = 200;
+
+(function drawCity(){
+  cityCtx.clearRect(0,0,cityCanvas.width,cityCanvas.height);
+  let x=0;
+  while(x<cityCanvas.width){
+    const w=10+Math.random()*28;
+    const h=25+Math.random()*140;
+    const g=cityCtx.createLinearGradient(x,cityCanvas.height-h,x,cityCanvas.height);
+    g.addColorStop(0,'rgba(40,2,2,0.95)');
+    g.addColorStop(1,'rgba(10,0,0,1)');
+    cityCtx.fillStyle=g;
+    cityCtx.fillRect(x,cityCanvas.height-h,w,h);
+    for(let wy=cityCanvas.height-h+8;wy<cityCanvas.height-5;wy+=11){
+      for(let wx=x+2;wx<x+w-3;wx+=7){
+        if(Math.random()>0.42){
+          const r=Math.random();
+          cityCtx.fillStyle=r>0.5
+            ?`rgba(255,60,60,${0.3+Math.random()*0.45})`
+            :`rgba(255,140,140,${0.2+Math.random()*0.35})`;
+          cityCtx.fillRect(wx,wy,4,5);
+        }
+      }
+    }
+    x+=w+1+Math.random()*4;
+  }
+})();
+
+/* ---- CONNECTOR LINES ---- */
+const lineCanvas = document.getElementById('lineCanvas');
+const lCtx = lineCanvas.getContext('2d');
+lineCanvas.width = window.innerWidth;
+lineCanvas.height = window.innerHeight;
+
+let alpha = 0.55;
+let dir = 1;
+
+function drawLines(){
+  lCtx.clearRect(0,0,lineCanvas.width,lineCanvas.height);
+
+  // หาจุดกลาง IT จริง
+  const it = document.querySelector('.it-text');
+  const itRect = it.getBoundingClientRect();
+
+  const cx = itRect.left + itRect.width / 2 - 5 ;
+  const cy = itRect.top + itRect.height / 2 + 28 ;
+
+  const nodes = document.querySelectorAll('.node');
+
+  nodes.forEach(node=>{
+    const rect = node.getBoundingClientRect();
+
+    // จุดกลาง node จริง
+    const nx = rect.left + rect.width / 2;
+    const ny = rect.top + rect.height / 2;
+
+    const grad = lCtx.createLinearGradient(cx,cy,nx,ny);
+    grad.addColorStop(0,`rgba(255,40,40,${alpha})`);
+    grad.addColorStop(1,`rgba(150,0,0,0.05)`);
+
+    lCtx.beginPath();
+    lCtx.moveTo(cx,cy);
+    lCtx.lineTo(nx,ny);
+    lCtx.strokeStyle = grad;
+    lCtx.lineWidth = 1.5;
+    lCtx.stroke();
+
+    // จุดปลาย
+    lCtx.beginPath();
+    lCtx.arc(nx,ny,6,0,Math.PI*2);
+    lCtx.fillStyle = `rgba(255,60,60,${alpha})`;
+    lCtx.fill();
+  });
+}
+
+
+setTimeout(drawLines,150);
+
+setInterval(()=>{
+  alpha+=dir*0.012;
+  if(alpha>0.8||alpha<0.3) dir*=-1;
+  drawLines();
+},50);
+
+window.addEventListener('resize',()=>{
+  lineCanvas.width=window.innerWidth;
+  lineCanvas.height=window.innerHeight;
+  cityCanvas.width=window.innerWidth;
+  setTimeout(drawLines,80);
+});
+</script>
+</body>
+</html>
+
+
+<body>
+
+<nav class="navbar">
+
+<div class="logo">
+KITTISAK BUNSUAY
+</div>
+
+<ul class="menu">
+
+<li><a href="index.html">Home</a></li>
+<li><a href="Resume.html">Profile</a></li>
+<li><a href="educational record1.html">Educational</a></li>
+<li><a href="performance.html">Certificates</a></li>
+<li><a href="activity1.html">Activities</a></li>
+
+</ul>
+
+<div class="right">
+
+<button class="btn-outline">ผู้จัดทำ</button>
+<button class="btn-red">KITTISAK</button>
+
+</div>
+
+</nav>
+
+</body>
+</html>
